@@ -1,0 +1,166 @@
+{
+  "project": {
+    "title": "UbatKu Medicine Reminder App",
+    "id": "16193031404494907077",
+    "description": "Flutter mobile app for medication reminders with modern Material Design 3 interface",
+    "visibility": "PUBLIC",
+    "created": "2026-08-13T02:13:41.955088Z",
+    "updated": "2026-08-13T03:10:13.725921Z"
+  },
+  "screens": [
+    {
+      "number": 1,
+      "title": "Splash Page & Reminder Preview",
+      "id": "071ea5fae61449d38ecf1bc216c65e32",
+      "deviceType": "MOBILE",
+      "dimensions": {
+        "width": 390,
+        "height": 1768
+      },
+      "description": "Initial splash screen with app branding and reminder preview",
+      "files": {
+        "screenshot": "screenshots/01_splash_page.jpg",
+        "code": "code/01_splash_page.html"
+      },
+      "downloadUrls": {
+        "screenshot": "https://lh3.googleusercontent.com/aida/AP1WRLsvNFa1H1iXjuG1ifhshWaxxTKOMnRRKewlGHRvdV1Q8JCrsOLth9ejCNQ-s_NiELFz5cXMJqUaKU5aYTKpmRPWEnWSyxgIMyWwbd0ZcWgkt63MA6A328B77JEcr9JeOzNWz7tsjPXJe1Wr_2jF-0tGp8j0UZCxH9XgbSFwp0ITFSRLfcgICS5V7621N0f4Wwo8gr3SIBv6KjUYsbPWo8zeQ0JbwJNE6Q_QDZIqUMMUqb3RPD4NHbckZbHj",
+        "code": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1OGU0NDQ3MjEzOTQwNTIyYTJiMThmMjIxZTA2EgsSBxDrwpbTigoYAZIBJAoKcHJvamVjdF9pZBIWQhQxNjE5MzAzMTQwNDQ5NDkwNzA3Nw"
+      }
+    },
+    {
+      "number": 2,
+      "title": "Login Page",
+      "id": "b0a4bbe3ce004601a520cee4991614c5",
+      "deviceType": "MOBILE",
+      "dimensions": {
+        "width": 390,
+        "height": 1768
+      },
+      "description": "User authentication screen with email/password login form",
+      "files": {
+        "screenshot": "screenshots/02_login_page.jpg",
+        "code": "code/02_login_page.html"
+      },
+      "downloadUrls": {
+        "screenshot": "https://lh3.googleusercontent.com/aida/AP1WRLsRQLcByYkbymHgRHAtW6LzqSxhAYS6VWCoBxKNMLiyaBlj9Gg6_ogzUcqDgCoQr7CdagFmvWtg5SgHXLQme1FsqkUmlCbUz-6Su74aY4cb08__BecDwLaKqSN_iVQ65FLLU76O3PKUlFwjcKaMVWFLuHHmIAoUUwDEiyW2bs-dygECIkAiqL85yydxvyXln2Lx3sZVrVqXRb5aOLAYiZKmuboKVd8rYCojaVcj-5sBK-QpzJYIkhyr_aAe",
+        "code": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1OGU0NDRiMmYwMGMwMmE5YmU2YmYyMmY4ZDAyEgsSBxDrwpbTigoYAZIBJAoKcHJvamVjdF9pZBIWQhQxNjE5MzAzMTQwNDQ5NDkwNzA3Nw"
+      }
+    },
+    {
+      "number": 3,
+      "title": "Dashboard",
+      "id": "9541105177734a8bad54dd261431c816",
+      "deviceType": "MOBILE",
+      "dimensions": {
+        "width": 390,
+        "height": 1768
+      },
+      "description": "Main dashboard showing upcoming medications and daily schedule",
+      "files": {
+        "screenshot": "screenshots/03_dashboard.jpg",
+        "code": "code/03_dashboard.html"
+      },
+      "downloadUrls": {
+        "screenshot": "https://lh3.googleusercontent.com/aida/AP1WRLsn35Ddl_XtM-YMyxXZDrMHJ4eCY1ZTqkV9DRGJVsPq3u7ckKMfCYUjhpWXD7wt8JWpQuLKlFQHPvLsdbXshHntxwgMz3saILuto4ZgonKZx757xFXS6330VJALDGIQlljggpftE5N1cGeXRUNV8bjhx96llpNBTYsecWm41s2idymDN1rt_laB9rmc0ptj4LMFiwEmvJbGsiDGZtlFo76Wo_i_cSdIwBEkwa7c4-gxQGx32LPgtuxVbi6M",
+        "code": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1OGU0NDU2Y2RlZjMwMWI0ZTZjYmJmMzE4MzA1EgsSBxDrwpbTigoYAZIBJAoKcHJvamVjdF9pZBIWQhQxNjE5MzAzMTQwNDQ5NDkwNzA3Nw"
+      }
+    },
+    {
+      "number": 4,
+      "title": "Medication History",
+      "id": "1bb093ec17d64194a5829e01dc02e06e",
+      "deviceType": "MOBILE",
+      "dimensions": {
+        "width": 390,
+        "height": 1768
+      },
+      "description": "Historical log of medications taken with dates and times",
+      "files": {
+        "screenshot": "screenshots/04_medication_history.jpg",
+        "code": "code/04_medication_history.html"
+      },
+      "downloadUrls": {
+        "screenshot": "https://lh3.googleusercontent.com/aida/AP1WRLuTrG1duxAQaq2yvwQ9mnmRYvH5KAxyl1xfZHDGrCMreWyWy8J1058VilXT6_l52movYC8cxSYlHioiXuaqDhUR7mF-6-fVNiO_IQcKs73HSDpxzuArcvt30LzZnTJuDxsIg_8AkYKWtIWRROJ3SiYCr0HV_twdKh4L92ns3uRzHxKrLdqFO3wnXsRjltjJjrqmgP2UZRUv3_UU0yB_sdeQXYAF0-8CmtEiCELJ9u_cYiOq4JnUisWchk0",
+        "code": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1OGU0NmJmYjFhNTQwN2M0Y2EwNmE4MDk4ODQ0EgsSBxDrwpbTigoYAZIBJAoKcHJvamVjdF9pZBIWQhQxNjE5MzAzMTQwNDQ5NDkwNzA3Nw"
+      }
+    },
+    {
+      "number": 5,
+      "title": "Add Medicine & Reminder",
+      "id": "499af0972d724ab9800e52285cd8de2a",
+      "deviceType": "MOBILE",
+      "dimensions": {
+        "width": 390,
+        "height": 2756
+      },
+      "description": "Form for adding new medications and setting up reminder schedules (scrollable)",
+      "files": {
+        "screenshot": "screenshots/05_add_medicine.jpg",
+        "code": "code/05_add_medicine.html"
+      },
+      "downloadUrls": {
+        "screenshot": "https://lh3.googleusercontent.com/aida/AP1WRLvurxT2ZWxfhKRgqJpnECuvrN04bagcEJy45sWXGD4XHQclkZ4csDPWFGVMkeF_PFv-TLKLrkZy0ztgRRQkD5OXzkPDP-X735gwKZlrlUx5qhPQcQ8pp_vbzSOjBfxscPaDzBd5koA2G-YxFJ1amYy9wRrbOqsu19W62l8_M1SUKERyA6Fq8OyYvy-Bb6GHU2U9WWbU1r4n8t5kD2JXcm5NEI7uvBsYaw3eXaU1FadMM7Ob6Cn9ailR3wmR",
+        "code": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ8Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpbCiVodG1sXzAwMDY1OGU0NDU5NDkzMDcwNTIyODk1ZjI0MWJmZTE5EgsSBxDrwpbTigoYAZIBJAoKcHJvamVjdF9pZBIWQhQxNjE5MzAzMTQwNDQ5NDkwNzA3Nw"
+      }
+    }
+  ],
+  "designSystem": {
+    "name": "UbatKu",
+    "colors": {
+      "primary": "#006b5f",
+      "primaryContainer": "#00a896",
+      "secondary": "#006d36",
+      "secondaryContainer": "#6dfe9c",
+      "tertiary": "#005bc0",
+      "tertiaryContainer": "#5694ff",
+      "error": "#ba1a1a",
+      "background": "#f8f9ff",
+      "surface": "#f8f9ff",
+      "outline": "#6c7a76"
+    },
+    "typography": {
+      "display": {
+        "size": "32px",
+        "weight": 700,
+        "lineHeight": "40px",
+        "letterSpacing": "-0.02em"
+      },
+      "headlineLg": {
+        "size": "24px",
+        "weight": 600,
+        "lineHeight": "32px"
+      },
+      "headlineMd": {
+        "size": "20px",
+        "weight": 600,
+        "lineHeight": "28px"
+      },
+      "bodyLg": {
+        "size": "18px",
+        "weight": 400,
+        "lineHeight": "28px"
+      },
+      "bodyMd": {
+        "size": "16px",
+        "weight": 400,
+        "lineHeight": "24px"
+      }
+    },
+    "spacing": {
+      "containerMargin": "20px",
+      "inlineGap": "12px",
+      "sectionPadding": "24px",
+      "stackGap": "16px",
+      "roundness": "8px"
+    }
+  },
+  "downloadMetadata": {
+    "downloadedAt": "2026-08-13",
+    "totalFiles": 11,
+    "totalSizeBytes": 227741,
+    "format": {
+      "images": "JPEG",
+      "code": "HTML"
+    }
+  }
+}
