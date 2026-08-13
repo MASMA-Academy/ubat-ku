@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Medication - UbatKu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#f8f9ff",
+                        "outline": "#6c7a76",
+                        "tertiary-fixed": "#d8e2ff",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e6eeff",
+                        "on-background": "#121c2a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#dee9fc",
+                        "on-secondary-container": "#007439",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#005bc0",
+                        "tertiary-fixed-dim": "#adc7ff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#002c64",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#79f7e3",
+                        "primary": "#006b5f",
+                        "on-secondary-fixed": "#00210c",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-container": "#5694ff",
+                        "primary-container": "#00a896",
+                        "inverse-surface": "#27313f",
+                        "on-primary-fixed": "#00201c",
+                        "on-tertiary-fixed-variant": "#004493",
+                        "on-primary-container": "#00352e",
+                        "secondary-container": "#6dfe9c",
+                        "on-primary-fixed-variant": "#005047",
+                        "inverse-on-surface": "#eaf1ff",
+                        "secondary": "#006d36",
+                        "surface-container-low": "#eff4ff",
+                        "surface-tint": "#006b5f",
+                        "surface-dim": "#d0dbed",
+                        "on-surface": "#121c2a",
+                        "primary-fixed-dim": "#59dbc7",
+                        "surface-container-highest": "#d9e3f6",
+                        "on-surface-variant": "#3c4946",
+                        "surface-variant": "#d9e3f6",
+                        "secondary-fixed": "#6dfe9c",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#bbcac5",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#001a41",
+                        "on-secondary-fixed-variant": "#005227",
+                        "secondary-fixed-dim": "#4de082",
+                        "inverse-primary": "#59dbc7",
+                        "background": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "inline-gap": "12px",
+                        "section-padding": "24px",
+                        "container-margin": "20px",
+                        "stack-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col font-body-md pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface shadow-sm full-width top-0 sticky z-40">
+<div class="flex justify-between items-center px-section-padding py-4 w-full max-w-4xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container shrink-0 overflow-hidden">
+<img alt="UbatKu Logo" class="w-full h-full object-cover" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+</div>
+<h1 class="font-display text-display text-primary dark:text-primary-fixed-dim m-0">UbatKu</h1>
+</div>
+<button aria-label="Notifications" class="w-12 h-12 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-2xl" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow w-full max-w-2xl mx-auto px-container-margin py-section-padding">
+<div class="mb-stack-gap">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Add New Medication</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Enter the details of your prescription to receive timely reminders.</p>
+</div>
+<form class="space-y-stack-gap">
+<!-- Medicine Name -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant">
+<label class="block font-label-lg text-label-lg text-on-surface mb-2" for="med-name">Medicine Name</label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" data-icon="medication">medication</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 bg-surface rounded-lg border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-container text-body-lg font-body-lg text-on-surface placeholder-outline transition-all min-h-[48px]" id="med-name" placeholder="e.g. Amoxicillin, Lisinopril" required="" type="text"/>
+</div>
+</div>
+<!-- Dosage & Form -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant grid grid-cols-1 md:grid-cols-2 gap-stack-gap">
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-2" for="dosage-amount">Dosage Amount</label>
+<input class="w-full px-4 py-4 bg-surface rounded-lg border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-container text-body-lg font-body-lg text-on-surface placeholder-outline transition-all min-h-[48px]" id="dosage-amount" placeholder="e.g. 1, 5, 20" required="" type="number"/>
+</div>
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-2" for="dosage-form">Form / Unit</label>
+<div class="relative">
+<select class="w-full appearance-none px-4 py-4 pr-10 bg-surface rounded-lg border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-container text-body-lg font-body-lg text-on-surface transition-all min-h-[48px]" id="dosage-form">
+<option value="pill">Pill(s)</option>
+<option value="capsule">Capsule(s)</option>
+<option value="ml">ml (Liquid)</option>
+<option value="mg">mg</option>
+<option value="drops">Drop(s)</option>
+<option value="application">Application(s)</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Frequency & Timing -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant space-y-stack-gap">
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-2" for="frequency">Frequency</label>
+<div class="relative">
+<select class="w-full appearance-none px-4 py-4 pr-10 bg-surface rounded-lg border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-container text-body-lg font-body-lg text-on-surface transition-all min-h-[48px]" id="frequency">
+<option value="daily">Once Daily</option>
+<option value="twice_daily">Twice Daily</option>
+<option value="three_times">Three Times a Day</option>
+<option value="as_needed">As Needed (PRN)</option>
+<option value="custom">Custom Schedule...</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface mb-3">Set Reminders</label>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<input class="flex-1 px-4 py-3 bg-surface rounded-lg border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-container text-body-lg font-body-lg text-on-surface min-h-[48px]" type="time" value="08:00"/>
+<button aria-label="Remove time" class="w-12 h-12 flex items-center justify-center rounded-lg border border-outline-variant text-error hover:bg-error-container hover:border-error transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<button class="w-full py-3 flex items-center justify-center gap-2 rounded-lg border border-dashed border-primary text-primary hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-lg text-label-lg min-h-[48px]" type="button">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                            Add Another Time
+                        </button>
+</div>
+</div>
+<!-- Time of Day Chips (Optional visually) -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Meal Relation (Optional)</label>
+<div class="flex flex-wrap gap-2">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="meal" type="radio"/>
+<div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-on-secondary-container peer-checked:border-secondary-container transition-colors font-label-md text-label-md">
+                                Before Food
+                            </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="meal" type="radio"/>
+<div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-on-secondary-container peer-checked:border-secondary-container transition-colors font-label-md text-label-md">
+                                With Food
+                            </div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="meal" type="radio"/>
+<div class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant peer-checked:bg-secondary-container peer-checked:text-on-secondary-container peer-checked:border-secondary-container transition-colors font-label-md text-label-md">
+                                After Food
+                            </div>
+</label>
+</div>
+</div>
+</div>
+<!-- Notes -->
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-surface-variant">
+<label class="block font-label-lg text-label-lg text-on-surface mb-2" for="instructions">Special Instructions / Notes</label>
+<textarea class="w-full px-4 py-3 bg-surface rounded-lg border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary-container text-body-md font-body-md text-on-surface placeholder-outline transition-all resize-none" id="instructions" placeholder="e.g. Take with a full glass of water." rows="3"></textarea>
+</div>
+<!-- Actions -->
+<div class="pt-4 flex flex-col gap-4">
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-label-lg text-label-lg shadow-sm hover:shadow-md hover:bg-surface-tint transition-all active:scale-[0.98] min-h-[56px] flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                    Save Medication
+                </button>
+</div>
+</form>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-lowest dark:bg-inverse-surface shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden">
+<div class="flex justify-around items-center px-4 py-3 w-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high active:scale-90 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:text-primary transition-colors" data-icon="home">home</span>
+<span class="font-label-md text-label-md group-hover:text-primary transition-colors">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container rounded-full px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-2xl mb-1 icon-filled" data-icon="add_circle">add_circle</span>
+<span class="font-label-md text-label-md">Add</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high active:scale-90 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:text-primary transition-colors" data-icon="history">history</span>
+<span class="font-label-md text-label-md group-hover:text-primary transition-colors">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high active:scale-90 transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined text-2xl mb-1 group-hover:text-primary transition-colors" data-icon="person">person</span>
+<span class="font-label-md text-label-md group-hover:text-primary transition-colors">Profile</span>
+</a>
+</div>
+</nav>
+<!-- Desktop Sidebar (Hidden on mobile, showing intent for wider screens based on rules, though full impl depends on layout shell) -->
+<aside class="hidden md:flex fixed left-0 top-[72px] bottom-0 w-64 bg-surface-container-lowest border-r border-surface-variant flex-col py-6 px-4 z-30">
+<nav class="space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined icon-filled" data-icon="add_circle">add_circle</span>
+<span>Add Medication</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-lg text-label-lg">History</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-lg text-label-lg">Profile</span>
+</a>
+</nav>
+</aside>
+<!-- Adjust main content padding for desktop sidebar -->
+<style>
+        @media (min-width: 768px) {
+            main { margin-left: 16rem; }
+            header > div { margin-left: 16rem; max-width: calc(100% - 16rem); }
+        }
+    </style>
+</body></html>

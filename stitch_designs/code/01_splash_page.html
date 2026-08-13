@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>UbatKu - Splash Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f8f9ff",
+                    "outline": "#6c7a76",
+                    "tertiary-fixed": "#d8e2ff",
+                    "error-container": "#ffdad6",
+                    "surface-container": "#e6eeff",
+                    "on-background": "#121c2a",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#dee9fc",
+                    "on-secondary-container": "#007439",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#005bc0",
+                    "tertiary-fixed-dim": "#adc7ff",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#002c64",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#79f7e3",
+                    "primary": "#006b5f",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary-container": "#5694ff",
+                    "primary-container": "#00a896",
+                    "inverse-surface": "#27313f",
+                    "on-primary-fixed": "#00201c",
+                    "on-tertiary-fixed-variant": "#004493",
+                    "on-primary-container": "#00352e",
+                    "secondary-container": "#6dfe9c",
+                    "on-primary-fixed-variant": "#005047",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary": "#006d36",
+                    "surface-container-low": "#eff4ff",
+                    "surface-tint": "#006b5f",
+                    "surface-dim": "#d0dbed",
+                    "on-surface": "#121c2a",
+                    "primary-fixed-dim": "#59dbc7",
+                    "surface-container-highest": "#d9e3f6",
+                    "on-surface-variant": "#3c4946",
+                    "surface-variant": "#d9e3f6",
+                    "secondary-fixed": "#6dfe9c",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "outline-variant": "#bbcac5",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#001a41",
+                    "on-secondary-fixed-variant": "#005227",
+                    "secondary-fixed-dim": "#4de082",
+                    "inverse-primary": "#59dbc7",
+                    "background": "#f8f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "inline-gap": "12px",
+                    "section-padding": "24px",
+                    "container-margin": "20px",
+                    "stack-gap": "16px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "display": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "display": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        
+        .pulse-animation {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 107, 95, 0.4);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 20px rgba(0, 107, 95, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(0, 107, 95, 0);
+            }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-surface h-screen w-full flex flex-col items-center justify-center overflow-hidden relative">
+<!-- Decorative Background Elements -->
+<div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-surface-container-high/50 to-transparent -z-10"></div>
+<div class="absolute -top-32 -right-32 w-96 h-96 bg-primary-container/20 rounded-full blur-3xl -z-10"></div>
+<div class="absolute -bottom-32 -left-32 w-96 h-96 bg-secondary-container/20 rounded-full blur-3xl -z-10"></div>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-md mx-auto px-container-margin flex flex-col items-center justify-center h-full relative z-10">
+<!-- Logo Section -->
+<div class="flex flex-col items-center justify-center mb-16 float-animation">
+<div class="w-32 h-32 rounded-3xl bg-surface-container-lowest shadow-[0_8px_30px_rgb(0,0,0,0.08)] flex items-center justify-center mb-6 pulse-animation p-4">
+<img alt="UbatKu Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFi7dP_lnxv1n7Kesa5yRAYtjMWMcM3s2q87eE8eq14BMUtpCxqIb8RJv_G1urNRmslfyxtmGpDZa79T0GQX_jSA2yod6D70mf03sU8J7P8Np2C3vgUIHwFWDm22ZcIBwlF3QKUhtDAUCyRT4LUl9Q1d14qO3PDfAYOfBbPYrs7ATDVJ-Hs9Ji-6s511FZSK3YcvdArENZj45UxOtTwTzReVTLbIUnuou_wAI9nQrPrx2dgXexKgNuNg"/>
+</div>
+<h1 class="font-display text-display text-primary tracking-tight">UbatKu</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 text-center max-w-xs">Your personal medication companion.</p>
+</div>
+<!-- Notification Mockup -->
+<div class="w-full bg-surface-container-lowest rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-outline-variant/30 transform transition-all duration-500 translate-y-4 opacity-0 animate-[slideUp_0.8s_ease-out_0.5s_forwards]">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">medication</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Reminder</span>
+<span class="font-label-md text-label-md text-outline">Just now</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface truncate mb-1">Time for your Panadol</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">500mg • After meals</p>
+</div>
+</div>
+<div class="mt-5 flex gap-3">
+<button class="flex-1 bg-surface-container hover:bg-surface-container-highest text-primary font-label-lg text-label-lg py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">snooze</span>
+                    Snooze
+                </button>
+<button class="flex-1 bg-primary hover:bg-primary-fixed-variant text-on-primary font-label-lg text-label-lg py-3 px-4 rounded-xl transition-all active:scale-95 shadow-md shadow-primary/20 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                    Take Now
+                </button>
+</div>
+</div>
+</main>
+<style>
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body></html>
