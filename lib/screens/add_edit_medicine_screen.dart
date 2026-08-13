@@ -40,7 +40,10 @@ class _AddEditMedicineScreenState extends State<AddEditMedicineScreen> {
       _selectedStartDate = widget.medicine!.startDate;
       _selectedEndDate = widget.medicine!.endDate;
       _reminderEnabled = widget.medicine!.reminderEnabled;
-      _selectedTime = TimeOfDay(hour: 8, minute: 0);
+      _selectedTime = TimeOfDay(
+        hour: widget.medicine!.reminderHour,
+        minute: widget.medicine!.reminderMinute,
+      );
     }
   }
 
@@ -69,6 +72,8 @@ class _AddEditMedicineScreenState extends State<AddEditMedicineScreen> {
       endDate: _selectedEndDate,
       notes: _notesController.text.isEmpty ? null : _notesController.text,
       reminderEnabled: _reminderEnabled,
+      reminderHour: _selectedTime.hour,
+      reminderMinute: _selectedTime.minute,
     );
 
     widget.onSave(medicine);
