@@ -32,22 +32,26 @@ class AuthGate extends StatefulWidget {
 
 class _AuthGateState extends State<AuthGate> {
   bool _isLoggedIn = false;
+  String? _userEmail;
 
   @override
   Widget build(BuildContext context) {
     if (!_isLoggedIn) {
       return LoginScreen(
-        onLoginSuccess: () {
+        onLoginSuccess: (email) {
           setState(() {
             _isLoggedIn = true;
+            _userEmail = email;
           });
         },
       );
     }
     return MainNavigation(
+      userEmail: _userEmail,
       onLogout: () {
         setState(() {
           _isLoggedIn = false;
+          _userEmail = null;
         });
       },
     );
@@ -55,9 +59,10 @@ class _AuthGateState extends State<AuthGate> {
 }
 
 class MainNavigation extends StatefulWidget {
+  final String? userEmail;
   final VoidCallback onLogout;
 
-  const MainNavigation({super.key, required this.onLogout});
+  const MainNavigation({super.key, this.userEmail, required this.onLogout});
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -67,7 +72,7 @@ class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
   late final List<Widget> _screens = <Widget>[
-    DashboardScreen(onLogout: widget.onLogout),
+    DashboardScreen(),
     MedicineListScreen(),
     MedicationHistoryScreen(),
     UserProfileScreen(),

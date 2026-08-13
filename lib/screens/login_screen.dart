@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ubatku/theme/app_theme.dart';
 
 class LoginScreen extends StatefulWidget {
-  final VoidCallback onLoginSuccess;
+  final void Function(String email) onLoginSuccess;
 
   const LoginScreen({Key? key, required this.onLoginSuccess})
     : super(key: key);
@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      widget.onLoginSuccess();
+      widget.onLoginSuccess(_emailController.text.trim());
     }
   }
 
