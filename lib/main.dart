@@ -4,7 +4,7 @@ import 'package:ubatku/screens/dashboard_screen.dart';
 import 'package:ubatku/screens/medicine_list_screen.dart';
 import 'package:ubatku/screens/medication_history_screen.dart';
 import 'package:ubatku/screens/login_screen.dart';
-import 'package:ubatku/screens/profile_screen.dart';
+import 'package:ubatku/screens/user_profile.dart';
 
 void main() {
   runApp(const UbatKuApp());
@@ -75,7 +75,7 @@ class _MainNavigationState extends State<MainNavigation> {
     DashboardScreen(),
     MedicineListScreen(),
     MedicationHistoryScreen(),
-    ProfileScreen(email: widget.userEmail, onLogout: widget.onLogout),
+    UserProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
