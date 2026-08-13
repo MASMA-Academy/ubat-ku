@@ -5,7 +5,9 @@ import 'package:ubatku/screens/add_edit_medicine_screen.dart';
 import 'package:ubatku/theme/app_theme.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+  final VoidCallback? onLogout;
+
+  const DashboardScreen({Key? key, this.onLogout}) : super(key: key);
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -109,6 +111,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           IconButton(
             icon: Icon(Icons.notifications_outlined, color: UbatKuTheme.onSurfaceVariant),
             onPressed: () {},
+          ),
+          SizedBox(width: 8),
+          IconButton(
+            icon: Icon(Icons.logout, color: UbatKuTheme.onSurfaceVariant),
+            onPressed: widget.onLogout,
           ),
           SizedBox(width: 8),
         ],

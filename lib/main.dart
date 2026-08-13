@@ -43,12 +43,20 @@ class _AuthGateState extends State<AuthGate> {
         },
       );
     }
-    return const MainNavigation();
+    return MainNavigation(
+      onLogout: () {
+        setState(() {
+          _isLoggedIn = false;
+        });
+      },
+    );
   }
 }
 
 class MainNavigation extends StatefulWidget {
-  const MainNavigation({super.key});
+  final VoidCallback onLogout;
+
+  const MainNavigation({super.key, required this.onLogout});
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -57,8 +65,8 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _screens = <Widget>[
-    DashboardScreen(),
+  late final List<Widget> _screens = <Widget>[
+    DashboardScreen(onLogout: widget.onLogout),
     MedicineListScreen(),
     MedicationHistoryScreen(),
   ];
