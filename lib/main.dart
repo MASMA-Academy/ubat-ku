@@ -4,6 +4,7 @@ import 'package:ubatku/screens/dashboard_screen.dart';
 import 'package:ubatku/screens/medicine_list_screen.dart';
 import 'package:ubatku/screens/medication_history_screen.dart';
 import 'package:ubatku/screens/login_screen.dart';
+import 'package:ubatku/screens/profile_screen.dart';
 
 void main() {
   runApp(const UbatKuApp());
@@ -31,22 +32,26 @@ class AuthGate extends StatefulWidget {
 
 class _AuthGateState extends State<AuthGate> {
   bool _isLoggedIn = false;
+  String? _userEmail;
 
   @override
   Widget build(BuildContext context) {
     if (!_isLoggedIn) {
       return LoginScreen(
-        onLoginSuccess: () {
+        onLoginSuccess: (email) {
           setState(() {
             _isLoggedIn = true;
+            _userEmail = email;
           });
         },
       );
     }
     return MainNavigation(
+      userEmail: _userEmail,
       onLogout: () {
         setState(() {
           _isLoggedIn = false;
+          _userEmail = null;
         });
       },
     );
@@ -54,9 +59,10 @@ class _AuthGateState extends State<AuthGate> {
 }
 
 class MainNavigation extends StatefulWidget {
+  final String? userEmail;
   final VoidCallback onLogout;
 
-  const MainNavigation({super.key, required this.onLogout});
+  const MainNavigation({super.key, this.userEmail, required this.onLogout});
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -66,9 +72,10 @@ class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
   late final List<Widget> _screens = <Widget>[
-    DashboardScreen(onLogout: widget.onLogout),
+    DashboardScreen(),
     MedicineListScreen(),
     MedicationHistoryScreen(),
+    ProfileScreen(email: widget.userEmail, onLogout: widget.onLogout),
   ];
 
   void _onItemTapped(int index) {
@@ -89,6 +96,7 @@ class _MainNavigationState extends State<MainNavigation> {
             label: 'Medicines',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
