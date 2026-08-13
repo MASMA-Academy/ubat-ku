@@ -14,11 +14,27 @@ class MedicationHistoryScreen extends StatefulWidget {
 
 class _MedicationHistoryScreenState extends State<MedicationHistoryScreen> {
   late List<MedicineIntake> historyItems;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     historyItems = MockData.getMedicationHistory();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<MedicineIntake> get _filteredHistoryItems {
+    if (_searchQuery.isEmpty) return historyItems;
+    final query = _searchQuery.toLowerCase();
+    return historyItems
+        .where((item) => item.medicineName.toLowerCase().contains(query))
+        .toList();
   }
 
   Map<String, List<MedicineIntake>> _groupByDate(List<MedicineIntake> items) {
@@ -35,7 +51,8 @@ class _MedicationHistoryScreenState extends State<MedicationHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final groupedHistory = _groupByDate(historyItems);
+    final filteredItems = _filteredHistoryItems;
+    final groupedHistory = _groupByDate(filteredItems);
     final sortedDates = groupedHistory.keys.toList();
 
     return Scaffold(
@@ -45,49 +62,87 @@ class _MedicationHistoryScreenState extends State<MedicationHistoryScreen> {
         foregroundColor: Colors.white,
         elevation: 0,
       ),
-      body: historyItems.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.history,
-                    size: 64,
-                    color: UbatKuTheme.primary.withAlpha((0.3 * 255).toInt()),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'No medication history',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                ],
-              ),
-            )
-          : ListView.builder(
-              itemCount: sortedDates.length,
-              itemBuilder: (context, index) {
-                final date = sortedDates[index];
-                final items = groupedHistory[date]!;
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(16, 24, 16, 12),
-                      child: Text(
-                        date,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                    ),
-                    ...items.map((intake) {
-                      return MedicineHistoryItem(intake: intake);
-                    }),
-                    if (index < sortedDates.length - 1)
-                      Divider(height: 1, indent: 16, endIndent: 16),
-                  ],
-                );
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value;
+                });
               },
+              decoration: InputDecoration(
+                hintText: 'Search by medicine name',
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: _searchQuery.isEmpty
+                    ? null
+                    : IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _searchController.clear();
+                          setState(() {
+                            _searchQuery = '';
+                          });
+                        },
+                      ),
+              ),
             ),
+          ),
+          Expanded(
+            child: filteredItems.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          _searchQuery.isEmpty
+                              ? Icons.history
+                              : Icons.search_off,
+                          size: 64,
+                          color: UbatKuTheme.primary.withAlpha(
+                            (0.3 * 255).toInt(),
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          _searchQuery.isEmpty
+                              ? 'No medication history'
+                              : 'No results for "$_searchQuery"',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: sortedDates.length,
+                    itemBuilder: (context, index) {
+                      final date = sortedDates[index];
+                      final items = groupedHistory[date]!;
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(16, 24, 16, 12),
+                            child: Text(
+                              date,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                          ),
+                          ...items.map((intake) {
+                            return MedicineHistoryItem(intake: intake);
+                          }),
+                          if (index < sortedDates.length - 1)
+                            Divider(height: 1, indent: 16, endIndent: 16),
+                        ],
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }
