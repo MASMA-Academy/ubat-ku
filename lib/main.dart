@@ -4,6 +4,7 @@ import 'package:ubatku/screens/dashboard_screen.dart';
 import 'package:ubatku/screens/medicine_list_screen.dart';
 import 'package:ubatku/screens/medication_history_screen.dart';
 import 'package:ubatku/screens/login_screen.dart';
+import 'package:ubatku/screens/user_profile.dart';
 
 void main() {
   runApp(const UbatKuApp());
@@ -69,6 +70,7 @@ class _MainNavigationState extends State<MainNavigation> {
     DashboardScreen(onLogout: widget.onLogout),
     MedicineListScreen(),
     MedicationHistoryScreen(),
+    UserProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -89,6 +91,7 @@ class _MainNavigationState extends State<MainNavigation> {
             label: 'Medicines',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

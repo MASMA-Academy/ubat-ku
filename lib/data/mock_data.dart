@@ -1,6 +1,13 @@
 import 'package:ubatku/models/medicine.dart';
+import 'package:ubatku/models/user.dart';
 
 class MockData {
+  static final User currentUser = User(
+    username: 'ahmadfaris',
+    email: 'sabsystem181@gmail.com',
+    fullName: 'Ahmad Faris',
+  );
+
   static final List<Medicine> medicines = [
     Medicine(
       id: '1',
