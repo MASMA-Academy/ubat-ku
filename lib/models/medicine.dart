@@ -64,6 +64,8 @@ class Medicine {
   final DateTime? endDate;
   final String? notes;
   final bool reminderEnabled;
+  final int reminderHour;
+  final int reminderMinute;
 
   Medicine({
     required this.id,
@@ -74,6 +76,8 @@ class Medicine {
     this.endDate,
     this.notes,
     this.reminderEnabled = true,
+    this.reminderHour = 8,
+    this.reminderMinute = 0,
   });
 
   bool get isActive {
@@ -91,6 +95,8 @@ class Medicine {
       'end_date': endDate?.toIso8601String(),
       'notes': notes,
       'reminder_enabled': reminderEnabled ? 1 : 0,
+      'reminder_hour': reminderHour,
+      'reminder_minute': reminderMinute,
     };
   }
 
@@ -106,6 +112,8 @@ class Medicine {
           : DateTime.parse(map['end_date'] as String),
       notes: map['notes'] as String?,
       reminderEnabled: (map['reminder_enabled'] as int) == 1,
+      reminderHour: map['reminder_hour'] as int? ?? 8,
+      reminderMinute: map['reminder_minute'] as int? ?? 0,
     );
   }
 
@@ -118,6 +126,8 @@ class Medicine {
     DateTime? endDate,
     String? notes,
     bool? reminderEnabled,
+    int? reminderHour,
+    int? reminderMinute,
   }) {
     return Medicine(
       id: id ?? this.id,
@@ -128,6 +138,8 @@ class Medicine {
       endDate: endDate ?? this.endDate,
       notes: notes ?? this.notes,
       reminderEnabled: reminderEnabled ?? this.reminderEnabled,
+      reminderHour: reminderHour ?? this.reminderHour,
+      reminderMinute: reminderMinute ?? this.reminderMinute,
     );
   }
 }

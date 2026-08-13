@@ -18,7 +18,7 @@ class DatabaseHelper {
     final path = join(dbPath, 'ubatku.db');
     return openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE medicines (
@@ -29,7 +29,9 @@ class DatabaseHelper {
             start_date TEXT NOT NULL,
             end_date TEXT,
             notes TEXT,
-            reminder_enabled INTEGER NOT NULL DEFAULT 1
+            reminder_enabled INTEGER NOT NULL DEFAULT 1,
+            reminder_hour INTEGER NOT NULL DEFAULT 8,
+            reminder_minute INTEGER NOT NULL DEFAULT 0
           )
         ''');
         await db.execute('''
@@ -42,22 +44,18 @@ class DatabaseHelper {
             status TEXT NOT NULL
           )
         ''');
-        await _seedInitialData(db);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute(
+            'ALTER TABLE medicines ADD COLUMN reminder_hour INTEGER NOT NULL DEFAULT 8',
+          );
+          await db.execute(
+            'ALTER TABLE medicines ADD COLUMN reminder_minute INTEGER NOT NULL DEFAULT 0',
+          );
+        }
       },
     );
-  }
-
-  Future<void> _seedInitialData(Database db) async {
-    final batch = db.batch();
-
-    for (final medicine in _seedMedicines) {
-      batch.insert('medicines', medicine.toMap());
-    }
-    for (final intake in _seedIntakes) {
-      batch.insert('medicine_intakes', intake.toMap());
-    }
-
-    await batch.commit(noResult: true);
   }
 
   // ---- Medicines ----
@@ -148,7 +146,11 @@ class DatabaseHelper {
     for (final medicine in medicines) {
       if (!medicine.reminderEnabled || !medicine.isActive) continue;
 
-      final times = _scheduledTimesFor(medicine.frequency);
+      final times = _scheduledTimesFor(
+        medicine.frequency,
+        medicine.reminderHour,
+        medicine.reminderMinute,
+      );
       for (var i = 0; i < times.length; i++) {
         final scheduledDateTime = today.add(times[i]);
         final match = todaysIntakes.where(
@@ -181,109 +183,21 @@ class DatabaseHelper {
     return reminders;
   }
 
-  List<Duration> _scheduledTimesFor(MedicineFrequency frequency) {
-    switch (frequency) {
-      case MedicineFrequency.daily:
-      case MedicineFrequency.everyOtherDay:
-      case MedicineFrequency.weekly:
-        return [Duration(hours: 8)];
-      case MedicineFrequency.twiceDaily:
-        return [Duration(hours: 8), Duration(hours: 20)];
-      case MedicineFrequency.threeTimesDaily:
-        return [Duration(hours: 8), Duration(hours: 13), Duration(hours: 20)];
-    }
+  /// Builds today's dose offsets anchored on the medicine's chosen reminder
+  /// time, spacing any additional daily doses evenly across 24 hours.
+  List<Duration> _scheduledTimesFor(
+    MedicineFrequency frequency,
+    int reminderHour,
+    int reminderMinute,
+  ) {
+    final baseMinutes = reminderHour * 60 + reminderMinute;
+    final dosesPerDay = frequency.timesPerDay;
+    final spacingMinutes = (24 * 60) ~/ dosesPerDay;
+
+    return List.generate(dosesPerDay, (i) {
+      final minutes = (baseMinutes + i * spacingMinutes) % (24 * 60);
+      return Duration(minutes: minutes);
+    });
   }
 
-  // ---- Seed data (first run only) ----
-
-  static final List<Medicine> _seedMedicines = [
-    Medicine(
-      id: '1',
-      name: 'Paracetamol',
-      dosage: '500mg',
-      frequency: MedicineFrequency.twiceDaily,
-      startDate: DateTime(2026, 8, 1),
-      endDate: DateTime(2026, 9, 1),
-      notes: 'For pain relief. Take with food.',
-      reminderEnabled: true,
-    ),
-    Medicine(
-      id: '2',
-      name: 'Vitamin C',
-      dosage: '1 tablet',
-      frequency: MedicineFrequency.daily,
-      startDate: DateTime(2026, 7, 15),
-      notes: 'Daily immune support',
-      reminderEnabled: true,
-    ),
-    Medicine(
-      id: '3',
-      name: 'Amoxicillin',
-      dosage: '500mg',
-      frequency: MedicineFrequency.threeTimesDaily,
-      startDate: DateTime(2026, 8, 10),
-      endDate: DateTime(2026, 8, 20),
-      notes: 'Antibiotic for infection. Complete full course.',
-      reminderEnabled: true,
-    ),
-    Medicine(
-      id: '4',
-      name: 'Ibuprofen',
-      dosage: '400mg',
-      frequency: MedicineFrequency.twiceDaily,
-      startDate: DateTime(2026, 8, 5),
-      endDate: DateTime(2026, 8, 15),
-      notes: 'For inflammation',
-      reminderEnabled: true,
-    ),
-    Medicine(
-      id: '5',
-      name: 'Metformin',
-      dosage: '500mg',
-      frequency: MedicineFrequency.twiceDaily,
-      startDate: DateTime(2026, 6, 1),
-      notes: 'Blood sugar management',
-      reminderEnabled: true,
-    ),
-  ];
-
-  static List<MedicineIntake> get _seedIntakes {
-    final today = DateTime.now();
-
-    DateTime on(int daysAgo, int hour, int minute) {
-      final d = today.subtract(Duration(days: daysAgo));
-      return DateTime(d.year, d.month, d.day, hour, minute);
-    }
-
-    final entries = <(String, String, String, String, DateTime, MedicineStatus)>[
-      ('h1', '1', 'Paracetamol', '500mg', on(0, 8, 30), MedicineStatus.taken),
-      ('h2', '2', 'Vitamin C', '1 tablet', on(0, 8, 45), MedicineStatus.taken),
-      ('h3', '3', 'Amoxicillin', '500mg', on(0, 8, 15), MedicineStatus.taken),
-      ('h4', '3', 'Amoxicillin', '500mg', on(0, 13, 0), MedicineStatus.skipped),
-      ('h5', '4', 'Ibuprofen', '400mg', on(0, 8, 20), MedicineStatus.taken),
-      ('h6', '5', 'Metformin', '500mg', on(0, 8, 0), MedicineStatus.taken),
-      ('h7', '1', 'Paracetamol', '500mg', on(1, 8, 30), MedicineStatus.taken),
-      ('h8', '1', 'Paracetamol', '500mg', on(1, 20, 15), MedicineStatus.taken),
-      ('h9', '2', 'Vitamin C', '1 tablet', on(1, 8, 45), MedicineStatus.taken),
-      ('h10', '3', 'Amoxicillin', '500mg', on(1, 8, 15), MedicineStatus.taken),
-      ('h11', '3', 'Amoxicillin', '500mg', on(1, 13, 30), MedicineStatus.taken),
-      ('h12', '3', 'Amoxicillin', '500mg', on(1, 20, 0), MedicineStatus.taken),
-      ('h13', '1', 'Paracetamol', '500mg', on(2, 8, 30), MedicineStatus.taken),
-      ('h14', '1', 'Paracetamol', '500mg', on(2, 20, 0), MedicineStatus.skipped),
-      ('h15', '2', 'Vitamin C', '1 tablet', on(2, 8, 45), MedicineStatus.taken),
-    ];
-
-    return entries
-        .map(
-          (e) => MedicineIntake(
-            id: e.$1,
-            medicineId: e.$2,
-            medicineName: e.$3,
-            dosage: e.$4,
-            dateTime: e.$5,
-            status: e.$6,
-          ),
-        )
-        .toList();
-  }
 }
