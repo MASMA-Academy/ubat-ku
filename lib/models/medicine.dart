@@ -81,6 +81,34 @@ class Medicine {
     return DateTime.now().isBefore(endDate!);
   }
 
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'dosage': dosage,
+      'frequency': frequency.name,
+      'start_date': startDate.toIso8601String(),
+      'end_date': endDate?.toIso8601String(),
+      'notes': notes,
+      'reminder_enabled': reminderEnabled ? 1 : 0,
+    };
+  }
+
+  factory Medicine.fromMap(Map<String, dynamic> map) {
+    return Medicine(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      dosage: map['dosage'] as String,
+      frequency: MedicineFrequency.values.byName(map['frequency'] as String),
+      startDate: DateTime.parse(map['start_date'] as String),
+      endDate: map['end_date'] == null
+          ? null
+          : DateTime.parse(map['end_date'] as String),
+      notes: map['notes'] as String?,
+      reminderEnabled: (map['reminder_enabled'] as int) == 1,
+    );
+  }
+
   Medicine copyWith({
     String? id,
     String? name,
@@ -186,5 +214,27 @@ class MedicineIntake {
 
   String get formattedTime {
     return '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}';
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'medicine_id': medicineId,
+      'medicine_name': medicineName,
+      'dosage': dosage,
+      'date_time': dateTime.toIso8601String(),
+      'status': status.name,
+    };
+  }
+
+  factory MedicineIntake.fromMap(Map<String, dynamic> map) {
+    return MedicineIntake(
+      id: map['id'] as String,
+      medicineId: map['medicine_id'] as String,
+      medicineName: map['medicine_name'] as String,
+      dosage: map['dosage'] as String,
+      dateTime: DateTime.parse(map['date_time'] as String),
+      status: MedicineStatus.values.byName(map['status'] as String),
+    );
   }
 }
