@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ubatku/models/medicine.dart';
-import 'package:ubatku/data/mock_data.dart';
+import 'package:ubatku/data/database_helper.dart';
 import 'package:ubatku/widgets/medicine_card.dart';
 import 'package:ubatku/screens/add_edit_medicine_screen.dart';
 import 'package:ubatku/theme/app_theme.dart';
@@ -13,18 +13,29 @@ class MedicineListScreen extends StatefulWidget {
 }
 
 class _MedicineListScreenState extends State<MedicineListScreen> {
-  late List<Medicine> medicines;
+  final _db = DatabaseHelper.instance;
+  List<Medicine> medicines = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    medicines = List.from(MockData.medicines);
+    _loadMedicines();
   }
 
-  void _addMedicine(Medicine medicine) {
+  Future<void> _loadMedicines() async {
+    final loaded = await _db.getMedicines();
+    if (!mounted) return;
     setState(() {
-      medicines.add(medicine);
+      medicines = loaded;
+      _isLoading = false;
     });
+  }
+
+  Future<void> _addMedicine(Medicine medicine) async {
+    await _db.insertMedicine(medicine);
+    await _loadMedicines();
+    if (!mounted) return;
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -34,10 +45,10 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
     );
   }
 
-  void _editMedicine(int index, Medicine medicine) {
-    setState(() {
-      medicines[index] = medicine;
-    });
+  Future<void> _editMedicine(Medicine medicine) async {
+    await _db.updateMedicine(medicine);
+    await _loadMedicines();
+    if (!mounted) return;
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -47,23 +58,14 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
     );
   }
 
-  void _deleteMedicine(int index) {
-    final medicine = medicines[index];
-    setState(() {
-      medicines.removeAt(index);
-    });
+  Future<void> _deleteMedicine(Medicine medicine) async {
+    await _db.deleteMedicine(medicine.id);
+    await _loadMedicines();
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('${medicine.name} deleted'),
         duration: Duration(seconds: 2),
-        action: SnackBarAction(
-          label: 'Undo',
-          onPressed: () {
-            setState(() {
-              medicines.insert(index, medicine);
-            });
-          },
-        ),
       ),
     );
   }
@@ -83,7 +85,11 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
             ],
           ),
         ),
-        child: medicines.isEmpty
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(color: UbatKuTheme.primary),
+              )
+            : medicines.isEmpty
             ? _buildEmptyState(context)
             : _buildMedicinesList(context),
       ),
@@ -268,17 +274,13 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
         final medicine = medicines[index];
         return Padding(
           padding: EdgeInsets.only(bottom: 12),
-          child: _buildMedicineItem(context, index, medicine),
+          child: _buildMedicineItem(context, medicine),
         );
       },
     );
   }
 
-  Widget _buildMedicineItem(
-    BuildContext context,
-    int index,
-    Medicine medicine,
-  ) {
+  Widget _buildMedicineItem(BuildContext context, Medicine medicine) {
     return MedicineListCard(
       medicine: medicine,
       onEdit: () async {
@@ -287,23 +289,19 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
             builder: (context) => AddEditMedicineScreen(
               medicine: medicine,
               onSave: (editedMedicine) {
-                _editMedicine(index, editedMedicine);
+                _editMedicine(editedMedicine);
               },
             ),
           ),
         );
       },
       onDelete: () {
-        _showDeleteConfirmation(context, index, medicine);
+        _showDeleteConfirmation(context, medicine);
       },
     );
   }
 
-  void _showDeleteConfirmation(
-    BuildContext context,
-    int index,
-    Medicine medicine,
-  ) {
+  void _showDeleteConfirmation(BuildContext context, Medicine medicine) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -411,7 +409,7 @@ class _MedicineListScreenState extends State<MedicineListScreen> {
                           child: InkWell(
                             onTap: () {
                               Navigator.of(context).pop();
-                              _deleteMedicine(index);
+                              _deleteMedicine(medicine);
                             },
                             borderRadius: BorderRadius.circular(12),
                             child: Container(

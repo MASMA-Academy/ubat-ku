@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ubatku/models/medicine.dart';
-import 'package:ubatku/data/mock_data.dart';
+import 'package:ubatku/data/database_helper.dart';
 import 'package:ubatku/widgets/medicine_card.dart';
 import 'package:ubatku/theme/app_theme.dart';
 
@@ -13,14 +13,25 @@ class MedicationHistoryScreen extends StatefulWidget {
 }
 
 class _MedicationHistoryScreenState extends State<MedicationHistoryScreen> {
-  late List<MedicineIntake> historyItems;
+  final _db = DatabaseHelper.instance;
+  List<MedicineIntake> historyItems = [];
+  bool _isLoading = true;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    historyItems = MockData.getMedicationHistory();
+    _loadHistory();
+  }
+
+  Future<void> _loadHistory() async {
+    final loaded = await _db.getMedicationHistory();
+    if (!mounted) return;
+    setState(() {
+      historyItems = loaded;
+      _isLoading = false;
+    });
   }
 
   @override
@@ -62,7 +73,9 @@ class _MedicationHistoryScreenState extends State<MedicationHistoryScreen> {
         foregroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Column(
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator(color: UbatKuTheme.primary))
+          : Column(
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(16, 16, 16, 8),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ubatku/models/medicine.dart';
-import 'package:ubatku/data/mock_data.dart';
+import 'package:ubatku/data/database_helper.dart';
 import 'package:ubatku/screens/add_edit_medicine_screen.dart';
 import 'package:ubatku/theme/app_theme.dart';
 
@@ -12,27 +12,45 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  late List<Medicine> medicines;
-  late List<MedicineReminder> todayReminders;
+  final _db = DatabaseHelper.instance;
+  List<Medicine> medicines = [];
+  List<MedicineReminder> todayReminders = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    medicines = List.from(MockData.medicines);
-    todayReminders = MockData.getTodayReminders(medicines);
+    _loadData();
   }
 
-  void _updateReminderStatus(int index, MedicineStatus status) {
+  Future<void> _loadData() async {
+    final loadedMedicines = await _db.getMedicines();
+    final loadedReminders = await _db.getTodayReminders();
+    if (!mounted) return;
     setState(() {
-      todayReminders[index] = todayReminders[index].copyWith(status: status);
+      medicines = loadedMedicines;
+      todayReminders = loadedReminders;
+      _isLoading = false;
     });
   }
 
-  void _addMedicine(Medicine medicine) {
-    setState(() {
-      medicines.add(medicine);
-      todayReminders = MockData.getTodayReminders(medicines);
-    });
+  Future<void> _updateReminderStatus(
+    Medicine medicine,
+    DateTime scheduledTime,
+    MedicineStatus status,
+  ) async {
+    await _db.setReminderStatus(
+      medicine: medicine,
+      scheduledTime: scheduledTime,
+      status: status,
+    );
+    await _loadData();
+  }
+
+  Future<void> _addMedicine(Medicine medicine) async {
+    await _db.insertMedicine(medicine);
+    await _loadData();
+    if (!mounted) return;
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -67,6 +85,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: UbatKuTheme.surface,
+        body: Center(
+          child: CircularProgressIndicator(color: UbatKuTheme.primary),
+        ),
+      );
+    }
+
     final total = todayReminders.length;
     final adherence = total == 0 ? 0.0 : _takenCount / total;
     final nextDoseIndex = _nextDoseIndex;
@@ -233,7 +260,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         : _timeOfDayLabel(reminder.scheduledTime),
                     timeLabel: _formattedTime(reminder.scheduledTime),
                     onMarkTaken: () => _updateReminderStatus(
-                      index,
+                      medicine,
+                      reminder.scheduledTime,
                       MedicineStatus.taken,
                     ),
                   ),
