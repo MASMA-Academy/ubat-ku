@@ -3,6 +3,7 @@ import 'package:ubatku/theme/app_theme.dart';
 import 'package:ubatku/screens/dashboard_screen.dart';
 import 'package:ubatku/screens/medicine_list_screen.dart';
 import 'package:ubatku/screens/medication_history_screen.dart';
+import 'package:ubatku/screens/login_screen.dart';
 
 void main() {
   runApp(const UbatKuApp());
@@ -16,8 +17,33 @@ class UbatKuApp extends StatelessWidget {
     return MaterialApp(
       title: 'UbatKu - Medicine Reminder',
       theme: UbatKuTheme.lightTheme,
-      home: const MainNavigation(),
+      home: const AuthGate(),
     );
+  }
+}
+
+class AuthGate extends StatefulWidget {
+  const AuthGate({super.key});
+
+  @override
+  State<AuthGate> createState() => _AuthGateState();
+}
+
+class _AuthGateState extends State<AuthGate> {
+  bool _isLoggedIn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isLoggedIn) {
+      return LoginScreen(
+        onLoginSuccess: () {
+          setState(() {
+            _isLoggedIn = true;
+          });
+        },
+      );
+    }
+    return const MainNavigation();
   }
 }
 
